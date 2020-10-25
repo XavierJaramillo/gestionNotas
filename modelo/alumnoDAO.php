@@ -14,18 +14,12 @@ class AlumnoDao{
         $sentencia=$this->pdo->prepare($query);
         $sentencia->execute();
         $lista_alumno=$sentencia->fetchAll(PDO::FETCH_ASSOC);
-        echo "<table style='border: 1px solid black'>";
-        echo "<tr>";
-        echo "<th colspan='2'><a href='añadir_alumno.php'><i class='material-icons'>add_circle_outline</i></a></th>";
-        echo "<th colspan='2'><input type='text' id='nombre' placeholder='Tu nombre...'></th>";
-        echo "<th colspan='2'><input type='text' id='apellidop' placeholder='Tu apellido...'></th>";
-        echo "<th><button type='button'>Filtrar</button></th>";
-        echo "</tr>";
+        
         foreach($lista_alumno as $alumno) {
             $id=$alumno['id_alumno'];
             echo "<tr>";
-            echo "<td style='border:1px solid black'><a href='modificar.php?id_alumno=$id&'>Modificar</a></th>";
-            echo "<td style='border:1px solid black'><a href='eliminar.php?id_alumno=$id&'>Eliminar</a></th>";
+            echo "<td style='border:1px solid black'><a href='../view/modificar.php?id_alumno=$id&'>Modificar</a></th>";
+            echo "<td style='border:1px solid black'><a href='../modelo/eliminarAlumno.php?id_alumno=$id'>Eliminar</a></th>";
             echo "<td style='border:1px solid black'>{$alumno['nombre_alumno']}</th>";
             echo "<td style='border:1px solid black'>{$alumno['apellido_paterno']}</th>";
             echo "<td style='border:1px solid black'>{$alumno['apellido_materno']}</th>";
@@ -33,7 +27,63 @@ class AlumnoDao{
             echo "<td style='border:1px solid black'>{$alumno['email_alumno']}</th>";
             echo "</tr>";
         }
-        echo "</table>";
-        
+    
     }
+    
+    public function filtro(){
+        include_once 'connection.php';
+        $query = "SELECT * FROM tbl_alumno WHERE nombre_alumno = '{$_POST['nombre_alumno']}' OR apellido_paterno = '{$_POST['apellido_paterno']}'";
+        $sentencia = $this->pdo->prepare($query);
+        $sentencia->execute();
+        $lista_alumno=$sentencia->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach($lista_alumno as $alumno) {
+            $id=$alumno['id_alumno'];
+            echo "<tr>";
+            echo "<td style='border:1px solid black'><a href='../view/modificar.php?id_alumno=$id&'>Modificar</a></th>";
+            echo "<td style='border:1px solid black'><a href='../modelo/eliminarAlumno.php?id_alumno=$id'>Eliminar</a></th>";
+            echo "<td style='border:1px solid black'>{$alumno['nombre_alumno']}</th>";
+            echo "<td style='border:1px solid black'>{$alumno['apellido_paterno']}</th>";
+            echo "<td style='border:1px solid black'>{$alumno['apellido_materno']}</th>";
+            echo "<td style='border:1px solid black'>{$alumno['grupo_alumno']}</th>";
+            echo "<td style='border:1px solid black'>{$alumno['email_alumno']}</th>";
+            echo "</tr>";
+        }
+    }
+
+    public function añadir(){
+        include_once 'connection.php';
+
+        try {
+            $this->pdo->beginTransaction();
+            // RECOGEMOS LOS DATOS DEL NUEVO ALUMNO
+            $nombre=$_POST['nombre_alumno'];
+            $apellidop=$_POST['apellido_paterno'];
+            $apellidom=$_POST['apellido_materno'];
+            $grupo=$_POST['grupo_alumno'];
+            $email=$_POST['email_alumno'];
+            $pass=$_POST['pass_alumno'];
+        
+            // MIRAMOS SI EN LA TABLA NOTAS HAY ALGUNA NOTA CON LA ID DEL ALUMNO
+            $query = "INSERT INTO `tbl_alumno` (`nombre_alumno`, `apellido_paterno`, `apellido_materno`, 
+            `grupo_alumno`, `email_alumno`, `pass_alumno`) VALUES (?, ?, ?, ?, ?, ?)";
+            $sentencia=$this->pdo->prepare($query);
+            $sentencia->bindParam(1,$nombre);
+            $sentencia->bindParam(2,$apellidop);
+            $sentencia->bindParam(3,$apellidom);
+            $sentencia->bindParam(4,$grupo);
+            $sentencia->bindParam(5,$email);
+            $sentencia->bindParam(6,$pass);
+            $sentencia->execute();
+            
+            $this->pdo->commit();
+            header('Location: ../view/index.admin.php');
+            
+        } catch (Exception $e) {
+            $this->pdo->rollBack();
+            echo $e;
+        }
+    }
+    
+
 }

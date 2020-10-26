@@ -20,3 +20,16 @@ function validacionForm() {
     }
     return false;
 }
+
+function validacionNotas() {
+    var nota0 = document.getElementById('nota0').value;
+    var nota1 = document.getElementById('nota1').value;
+    var nota2 = document.getElementById('nota2').value;
+    var msg = document.getElementById('msg');
+    if ((nota0 < 0 || nota0 > 10) || (nota1 < 0 || nota1 > 10) || (nota2 < 0 || nota2 > 10)) {
+        msg.innerHTML = "El valor de la nota debe estar entre 0 y 10!";
+        return false;
+    } else {
+        return true;
+    }
+}

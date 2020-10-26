@@ -9,7 +9,9 @@
 </head>
 
 <body>
-
+<?php
+require_once '../services/session.php';
+?>
 <div class="form">
     <h1>Login</h1>
   <form action="../controller/loginController.php" method="POST" onsubmit="return validacionForm()">

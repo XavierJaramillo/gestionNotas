@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/logout.css">
     <link rel="stylesheet" href="../css/forms.css">
     <script src="../js/code.js"></script>
     <title>Modificar alumno</title>
@@ -23,8 +24,9 @@
     $pdo->commit();
     $notas = $nDAO->notas();
     ?>
-    <h1>Modificar alumno</h1>
+    
     <div>
+        <h1>Modificar alumno</h1>
         <form action="../view/index.admin.php" method="GET" onsubmit="return validacionNotas()">
         <input type="text" id="id_alumno_modificar" name="id_alumno_modificar" style="display:none" value="<?php echo $persona['id_alumno'];?>">
         

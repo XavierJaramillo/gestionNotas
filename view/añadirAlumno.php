@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/logout.css">
     <link rel="stylesheet" href="../css/forms.css">
     <title>Añadir alumno</title>
 </head>
@@ -29,9 +30,9 @@
     <label for="grupo_alumno">Grupo:</label><br>
     <input type="text" id="grupo_alumno" name="grupo_alumno" required><br>
     <label for="email_alumno">Email:</label><br>
-    <input type="text" id="email_alumno" name="email_alumno" required><br>
+    <input type="email" id="email_alumno" name="email_alumno" required><br>
     <label for="pass_alumno">Contraseña:</label><br>
-    <input type="text" id="pass_alumno" name="pass_alumno" required><br>
+    <input type="password" id="pass_alumno" name="pass_alumno" required><br>
     <input type="submit" value="Submit">
     </form> 
 </div>

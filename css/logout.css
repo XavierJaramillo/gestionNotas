@@ -1,3 +1,9 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 h1 {
     text-align: center;
     width: fit-content;
@@ -5,24 +11,41 @@ h1 {
 }
 
 .logout {
+    background-color: yellow;
+    animation-name: example;
+    animation-duration: 4s;
+}
+
+@keyframes example {
+    from {
+        background-color: yellow;
+    }
+    to {
+        background-color: #34793678;
+    }
+}
+
+.logout {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 15px;
+    padding: 25px 0;
     width: auto;
-    margin: 15px;
+    margin-bottom: 50px;
+    background-color: #34793678;
 }
 
 .logout a {
     text-decoration: none;
     color: black;
     font-size: 20px;
-    border: 1px solid black;
-    padding: 8px;
-    border-radius: 15px;
+    border: 2px solid black;
+    padding: 8px 25px;
+    border-radius: 25px;
     background-color: #4caf4f6b;
 }
 
 .logout a:hover {
     background-color: #4caf4f;
+    color: white;
 }

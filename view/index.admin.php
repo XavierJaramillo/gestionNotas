@@ -13,14 +13,14 @@
     require_once '../services/session.php';
     require_once '../modelo/alumnoDAO.php';
 
-    echo "<table id='customers' style='border: 1px solid black'>";
+    echo "<table id='table'>";
     echo "<tr>";
     echo "<form action='index.admin.php' method='POST'>";
     echo "<th colspan='2'><a href='../view/añadirAlumno.php'><i class='material-icons'>add_circle_outline</i></a></th>";
     echo "<th><input type='text' id='nombre_alumno' name='nombre_alumno' placeholder='Tu nombre...'></th>";
     echo "<th><input type='text' id='apellido_paterno' name='apellido_paterno' placeholder='Tu apellido...'></th>";
     echo "<th colspan='2'>Aplicar filtro → <input type='submit' name='filtrar'></button></th>";
-    echo "<th></th>";
+    echo "<th><a href='../view/avg.php'>Más información.</a></th>";
     echo "</tr>";
     
     if(isset($_GET['id_alumno_eliminar'])){

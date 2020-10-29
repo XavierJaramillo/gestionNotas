@@ -50,6 +50,26 @@ class AlumnoDao{
         }
     }
 
+    public function filtro2(){
+        $query = "SELECT * FROM tbl_alumno WHERE nombre_alumno = '{$_POST['nombre_alumno']}' AND apellido_paterno = '{$_POST['apellido_paterno']}'";
+        $sentencia = $this->pdo->prepare($query);
+        $sentencia->execute();
+        $lista_alumno=$sentencia->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach($lista_alumno as $alumno) {
+            $id=$alumno['id_alumno'];
+            echo "<tr>";
+            echo "<td style='border:1px solid black'><a href='../view/modificar.php?id_alumno_modificar=$id&'>Modificar</a></th>";
+            echo "<td style='border:1px solid black'><a href='../view/index.admin.php?id_alumno_eliminar=$id'>Eliminar</a></th>";
+            echo "<td style='border:1px solid black'>{$alumno['nombre_alumno']}</th>";
+            echo "<td style='border:1px solid black'>{$alumno['apellido_paterno']}</th>";
+            echo "<td style='border:1px solid black'>{$alumno['apellido_materno']}</th>";
+            echo "<td style='border:1px solid black'>{$alumno['grupo_alumno']}</th>";
+            echo "<td style='border:1px solid black'>{$alumno['email_alumno']}</th>";
+            echo "</tr>";
+        }
+    }
+
     public function añadir(){
         try {
             $this->pdo->beginTransaction();

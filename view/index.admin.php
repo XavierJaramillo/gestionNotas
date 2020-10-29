@@ -9,18 +9,34 @@
     <title>Document</title>
 </head>
 <body>
+
+<?php
+require_once '../services/session.php';
+?>
+    <table id='table' class="opciones">
+        <tr>
+            <form action='index.admin.php' method='POST'>
+                <th colspan='2'><a href='../view/añadirAlumno.php'>Añadir alumno</a></th>
+                <th>Filtrar por → <input type='text' id='nombre_alumno' name='nombre_alumno' placeholder='Tu nombre...'></th>
+                <th>Filtrar por → <input type='text' id='apellido_paterno' name='apellido_paterno' placeholder='Tu apellido...'></th>
+                <th colspan='2'>Aplicar filtro → <input type='submit' name='filtrar'></th>
+                <th><a href='../view/avg.php'>Más información.</a></th>
+            </form>
+        </tr>
+    </table>
+
     <?php
-    require_once '../services/session.php';
     require_once '../modelo/alumnoDAO.php';
 
     echo "<table id='table'>";
     echo "<tr>";
     echo "<form action='index.admin.php' method='POST'>";
-    echo "<th colspan='2'><a href='../view/añadirAlumno.php'><i class='material-icons'>add_circle_outline</i></a></th>";
-    echo "<th><input type='text' id='nombre_alumno' name='nombre_alumno' placeholder='Tu nombre...'></th>";
-    echo "<th><input type='text' id='apellido_paterno' name='apellido_paterno' placeholder='Tu apellido...'></th>";
-    echo "<th colspan='2'>Aplicar filtro → <input type='submit' name='filtrar'></button></th>";
-    echo "<th><a href='../view/avg.php'>Más información.</a></th>";
+    echo "<th colspan='2'><p>Opciones</p></th>";
+    echo "<th><p>Nombre<p></th>";
+    echo "<th><p>Primer apellido</p></th>";
+    echo "<th><p>Segundo apellido</p></th>";
+    echo "<th><p>Grupo</p></th>";
+    echo "<th><p>Email</p></th>";
     echo "</tr>";
     
     if(isset($_GET['id_alumno_eliminar'])){
@@ -39,9 +55,15 @@
     } else if(empty($_POST['nombre_alumno']) && empty($_POST['apellido_paterno'])) {
         $alumnoDAO = new AlumnoDAO;
         echo $alumnoDAO->read();
-    } else if(isset($_POST['nombre_alumno']) || isset($_POST['apellido_paterno'])) {
+    } else if(isset($_POST['nombre_alumno']) && empty($_POST['apellido_paterno'])) {
         $alumnoDAO = new AlumnoDAO;
         $alumnoDAO->filtro();
+    } else if(empty($_POST['nombre_alumno']) && isset($_POST['apellido_paterno'])) {
+        $alumnoDAO = new AlumnoDAO;
+        $alumnoDAO->filtro();
+    } else if(isset($_POST['nombre_alumno']) && isset($_POST['apellido_paterno'])) {
+        $alumnoDAO = new AlumnoDAO;
+        $alumnoDAO->filtro2();
     }
 
     echo "</table>";
